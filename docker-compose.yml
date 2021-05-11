@@ -1,0 +1,30 @@
+version: "3"
+services:
+  db:
+    image: mysql:5
+    working_dir: /opt/app
+    volumes:
+      - .:/opt/app:cached
+      - db:/var/lib/mysql:cached
+    environment:
+      - MYSQL_DATABASE=default
+      - MYSQL_USER=default
+      - MYSQL_PASSWORD=secret
+      - MYSQL_ROOT_PASSWORD=zaq1@WSX
+    networks:
+      - backend
+    ports:
+      - "3306:3306"
+
+  adminer:
+    image: adminer
+    networks:
+      - backend
+    ports:
+      - "8080:8080"
+
+volumes:
+  db:
+
+networks:
+  backend:
