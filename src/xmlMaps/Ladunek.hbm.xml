@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="model.Ladunek" table="LADUNEK">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="typ">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">model.LadunekTyp</param>
+            </type>
+        </property>
+        <property name="uwagi" type="java.lang.String" />
+    </class>
+</hibernate-mapping>

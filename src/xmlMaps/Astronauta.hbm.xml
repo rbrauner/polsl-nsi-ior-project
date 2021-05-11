@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="model.Astronauta" table="ASTRONAUTA">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="imie" type="java.lang.String" />
+        <property name="nazwisko" type="java.lang.String" />
+        <property name="stopien" type="java.lang.String" />
+        <property name="liczbaMisji" type="java.lang.Integer" />
+        <property name="liczbaSpacerowKosmicznych" type="java.lang.Integer" />
+    </class>
+</hibernate-mapping>

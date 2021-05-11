@@ -5,13 +5,10 @@
  */
 package util;
 
-import model.*;
-import java.io.File;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.io.File;
 
 /**
  *
@@ -19,8 +16,8 @@ import org.slf4j.LoggerFactory;
  */
 
 public final class HiberUtil {
-    
-//     static Logger log = LoggerFactory.getLogger(HiberUtil.class); 
+
+//     static Logger log = LoggerFactory.getLogger(HiberUtil.class);
     /**
      * choose type of mapping definition XML or annotations
      */
@@ -28,19 +25,19 @@ public final class HiberUtil {
        /**
         * use xml defined mappings for configuration
         */
-       XML, 
+       XML,
        /**
         * use annotation defined mappings for confuguration
         */
        ANN;
-    } 
+    }
     /**
-     * 
+     *
      * @param mapping
-     * @return SessionFactory 
+     * @return SessionFactory
      */
     public static SessionFactory getSessionFactory(Mapping mapping) {
-   
+
         switch(mapping){
             case XML:
                 return(getXMLSessionFactory());
@@ -48,9 +45,9 @@ public final class HiberUtil {
                 return(getANNSessionFactory());
             default:
                return(getXMLSessionFactory());
-        }  
+        }
     }
-  
+
     public static SessionFactory getXMLSessionFactory() {
         try {
             File mappingDir = new File("src\\xmlMaps");
@@ -59,13 +56,13 @@ public final class HiberUtil {
 //            config.setProperty("hibernate.show_sql", "false");
             config.addDirectory(mappingDir);
             SessionFactory sf = config.buildSessionFactory();
-           
+
 //            log.trace("Session Factory created "+java.time.LocalDate.now());
-           
+
             return (sf);
         }
         catch (Throwable ex) {
-          
+
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }
@@ -75,20 +72,20 @@ public final class HiberUtil {
         try {
             Configuration config = new Configuration().configure();
             config.setProperty("hibernate.show_sql", "true");
-                      
-            config.addAnnotatedClass(Address.class)
-            .addAnnotatedClass(Department.class)
-            .addAnnotatedClass(Child.class)
-            .addAnnotatedClass(Manager.class)
-            .addAnnotatedClass(Person.class)
-            .addAnnotatedClass(Employee.class)
-            .addAnnotatedClass(Project.class);
+
+//            config.addAnnotatedClass(Address.class)
+//            .addAnnotatedClass(Department.class)
+//            .addAnnotatedClass(Child.class)
+//            .addAnnotatedClass(Manager.class)
+//            .addAnnotatedClass(Person.class)
+//            .addAnnotatedClass(Employee.class)
+//            .addAnnotatedClass(Project.class);
             SessionFactory sf = config.buildSessionFactory();
-           
+
             return (sf);
         }
         catch (Throwable ex) {
-          
+
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }

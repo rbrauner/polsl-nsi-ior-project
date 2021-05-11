@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="model.Prom" table="PROM">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="nazwa" type="java.lang.String" />
+        <property name="rokProdukcji" type="java.lang.Integer" />
+        <property name="ladownosc" type="java.lang.Integer" />
+        <property name="liczbaCzlonkowZalogi" type="java.lang.Integer" />
+    </class>
+</hibernate-mapping>
