@@ -7,6 +7,8 @@ package hiberApp;
 
 import model.Astronauta;
 import model.Misja;
+import model.Prom;
+import org.hibernate.Metamodel;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.criteria.internal.predicate.LikePredicate;
 import util.HiberUtil;
@@ -14,10 +16,8 @@ import util.HiberUtil;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ListJoin;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
+import javax.persistence.metamodel.EntityType;
 import java.util.List;
 
 /*
@@ -40,8 +40,8 @@ public final class MainAppJPA {
         EntityManager em = SESSION_FACTORY.createEntityManager();
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Astronauta> criteria = builder.createQuery(Astronauta.class);
-        Root<Astronauta> root = criteria.from(Astronauta.class);
-        criteria.select(root).where(builder.like(root.get("nazwisko"), "%Kowal%"));
+        Root<Astronauta> astronauta = criteria.from(Astronauta.class);
+        criteria.select(astronauta).where(builder.like(astronauta.get("nazwisko"), "%Kowal%"));
 
         List<Astronauta> resultList = em.createQuery(criteria).getResultList();
         resultList.forEach(System.out::println);
@@ -50,14 +50,24 @@ public final class MainAppJPA {
     public static void query2() {
         EntityManager em = SESSION_FACTORY.createEntityManager();
         CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Astronauta> criteria = builder.createQuery(Astronauta.class);
-        Root<Astronauta> root = criteria.from(Astronauta.class);
-        criteria.select(root).where(builder.like(root.get("nazwisko"), "%Kowal%"));
+        CriteriaQuery<Prom> criteria = builder.createQuery(Prom.class);
+        Root<Astronauta> astronauta = criteria.from(Astronauta.class);
+        Join<Astronauta, Misja> misja = astronauta.join("misja");
+        Join<Misja, Prom> prom = misja.join("prom");
+        criteria.select(prom).where(builder.like(misja.get("uwagi"), "%Brak%"));
 
-        List<Astronauta> resultList = em.createQuery(criteria).getResultList();
+        List<Prom> resultList = em.createQuery(criteria).getResultList();
         resultList.forEach(System.out::println);
     }
 
     public static void query3() {
+        EntityManager em = SESSION_FACTORY.createEntityManager();
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
+        Root<Astronauta> astronauta = criteria.from(Astronauta.class);
+        criteria.select(builder.count(astronauta));
+
+        List<Long> resultList = em.createQuery(criteria).getResultList();
+        resultList.forEach(System.out::println);
     }
 }
