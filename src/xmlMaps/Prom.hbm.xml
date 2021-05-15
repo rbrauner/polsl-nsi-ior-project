@@ -4,12 +4,18 @@
 <hibernate-mapping>
     <class name="model.Prom" table="PROM">
         <id name="id" type="int">
-            <column name="ID" />
-            <generator class="native" />
+            <column name="ID"/>
+            <generator class="native"/>
         </id>
-        <property name="nazwa" type="java.lang.String" />
-        <property name="rokProdukcji" type="java.lang.Integer" />
-        <property name="ladownosc" type="java.lang.Integer" />
-        <property name="liczbaCzlonkowZalogi" type="java.lang.Integer" />
+        <property name="nazwa" type="java.lang.String"/>
+        <property name="rokProdukcji" type="java.lang.Integer"/>
+        <property name="ladownosc" type="java.lang.Integer"/>
+        <property name="liczbaCzlonkowZalogi" type="java.lang.Integer"/>
+        <set inverse="true" lazy="true" name="misja">
+            <key>
+                <column name="ID"/>
+            </key>
+            <one-to-many class="model.Misja"/>
+        </set>
     </class>
 </hibernate-mapping>

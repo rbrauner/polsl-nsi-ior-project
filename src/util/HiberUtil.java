@@ -5,46 +5,47 @@
  */
 package util;
 
+import model.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.io.File;
 
 /**
- *
  * @author LabHiber RaU7
  */
 
 public final class HiberUtil {
 
 //     static Logger log = LoggerFactory.getLogger(HiberUtil.class);
+
     /**
      * choose type of mapping definition XML or annotations
      */
     public enum Mapping {
-       /**
-        * use xml defined mappings for configuration
-        */
-       XML,
-       /**
-        * use annotation defined mappings for confuguration
-        */
-       ANN;
+        /**
+         * use xml defined mappings for configuration
+         */
+        XML,
+        /**
+         * use annotation defined mappings for confuguration
+         */
+        ANN;
     }
+
     /**
-     *
      * @param mapping
      * @return SessionFactory
      */
     public static SessionFactory getSessionFactory(Mapping mapping) {
 
-        switch(mapping){
+        switch (mapping) {
             case XML:
-                return(getXMLSessionFactory());
+                return (getXMLSessionFactory());
             case ANN:
-                return(getANNSessionFactory());
+                return (getANNSessionFactory());
             default:
-               return(getXMLSessionFactory());
+                return (getXMLSessionFactory());
         }
     }
 
@@ -60,31 +61,32 @@ public final class HiberUtil {
 //            log.trace("Session Factory created "+java.time.LocalDate.now());
 
             return (sf);
-        }
-        catch (Throwable ex) {
+        } catch (Throwable ex) {
 
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }
     }
 
- public static SessionFactory getANNSessionFactory() {
+    public static SessionFactory getANNSessionFactory() {
         try {
             Configuration config = new Configuration().configure();
             config.setProperty("hibernate.show_sql", "true");
 
-//            config.addAnnotatedClass(Address.class)
-//            .addAnnotatedClass(Department.class)
-//            .addAnnotatedClass(Child.class)
-//            .addAnnotatedClass(Manager.class)
-//            .addAnnotatedClass(Person.class)
-//            .addAnnotatedClass(Employee.class)
-//            .addAnnotatedClass(Project.class);
+            config
+                    .addAnnotatedClass(Zadanie.class)
+                    .addAnnotatedClass(Ladunek.class)
+                    .addAnnotatedClass(Prom.class)
+                    .addAnnotatedClass(Astronauta.class)
+                    .addAnnotatedClass(Misja.class)
+                    .addAnnotatedClass(LotTransportowy.class)
+                    .addAnnotatedClass(MisjaBadawcza.class);
+
+
             SessionFactory sf = config.buildSessionFactory();
 
             return (sf);
-        }
-        catch (Throwable ex) {
+        } catch (Throwable ex) {
 
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);

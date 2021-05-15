@@ -1,32 +1,39 @@
     /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package model;
+     * To change this license header, choose License Headers in Project Properties.
+     * To change this template file, choose Tools | Templates
+     * and open the template in the editor.
+     */
+    package model;
 
-import java.util.List;
+    import org.hibernate.annotations.Cascade;
+    import org.hibernate.annotations.CascadeType;
 
-/**
- *
- * @author User
- */
-public class MisjaBadawcza extends Misja {
-    private List<Zadanie> zadanie;
+    import javax.persistence.*;
+    import java.util.List;
+    import java.util.Set;
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("MisjaBadawcza{zadanie=").append(zadanie);
-        sb.append('}');
-        return sb.toString();
+    /**
+     * @author User
+     */
+    @Entity
+    @PrimaryKeyJoinColumn(name = "ID", foreignKey = @javax.persistence.ForeignKey(name = "FK_MISJA_BADAWCZA_MISJA"))
+    @Table(name = "MISJA_BADAWCZA")
+    public class MisjaBadawcza extends Misja {
+        @OneToMany(mappedBy = "misja")
+        private Set<Zadanie> zadanie;
+
+        public Set<Zadanie> getZadanie() {
+            return zadanie;
+        }
+
+        public void setZadanie(Set<Zadanie> zadanie) {
+            this.zadanie = zadanie;
+        }
+
+        @Override
+        public String toString() {
+            return "MisjaBadawcza{" +
+//                    "zadanie=" + zadanie +
+                    '}';
+        }
     }
-
-    public List<Zadanie> getZadanie() {
-        return zadanie;
-    }
-
-    public void setZadanie(List<Zadanie> zadanie) {
-        this.zadanie = zadanie;
-    }
-}

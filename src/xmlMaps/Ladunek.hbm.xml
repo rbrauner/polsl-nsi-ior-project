@@ -4,14 +4,16 @@
 <hibernate-mapping>
     <class name="model.Ladunek" table="LADUNEK">
         <id name="id" type="int">
-            <column name="ID" />
-            <generator class="native" />
+            <column name="ID"/>
+            <generator class="native"/>
         </id>
         <property name="typ">
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">model.LadunekTyp</param>
             </type>
         </property>
-        <property name="uwagi" type="java.lang.String" />
+        <property name="uwagi" type="java.lang.String"/>
+        <many-to-one cascade="save-update" class="model.Misja" column="misja_id" foreign-key="FK_LADUNEK_MISJA"
+                     name="misja" unique="false"/>
     </class>
 </hibernate-mapping>

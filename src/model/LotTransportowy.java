@@ -1,32 +1,39 @@
     /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package model;
+     * To change this license header, choose License Headers in Project Properties.
+     * To change this template file, choose Tools | Templates
+     * and open the template in the editor.
+     */
+    package model;
 
-import java.util.List;
+    import org.hibernate.annotations.Cascade;
 
-/**
- *
- * @author User
- */
-public class LotTransportowy extends Misja {
-    private List<Ladunek> ladunek;
+    import javax.persistence.*;
+    import java.io.Serializable;
+    import java.util.List;
+    import java.util.Set;
 
-    public List<Ladunek> getLadunek() {
-        return ladunek;
+    /**
+     * @author User
+     */
+    @Entity
+    @PrimaryKeyJoinColumn(name = "ID", foreignKey = @javax.persistence.ForeignKey(name = "FK_LOT_TRANSPORTOWY_MISJA"))
+    @Table(name = "LOT_TRANSPORTOWY")
+    public class LotTransportowy extends Misja implements Serializable {
+        @OneToMany(mappedBy = "misja")
+        private Set<Ladunek> ladunek;
+
+        public Set<Ladunek> getLadunek() {
+            return ladunek;
+        }
+
+        public void setLadunek(Set<Ladunek> ladunek) {
+            this.ladunek = ladunek;
+        }
+
+        @Override
+        public String toString() {
+            return "LotTransportowy{" +
+//                    "ladunek=" + ladunek +
+                    '}';
+        }
     }
-
-    public void setLadunek(List<Ladunek> ladunek) {
-        this.ladunek = ladunek;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("LotTransportowy{ladunek=").append(ladunek);
-        sb.append('}');
-        return sb.toString();
-    }
-}

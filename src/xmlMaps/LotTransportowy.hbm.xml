@@ -2,35 +2,15 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="model.LotTransportowy" table="LOT_TRANSPORTOWY">
-        <id name="id" type="int">
-            <column name="ID" />
-            <generator class="native" />
-        </id>
-        <property name="cel">
-            <type name="org.hibernate.type.EnumType">
-                <param name="enumClass">model.MisjaCel</param>
-            </type>
-        </property>          
-        <property name="uwagi" type="java.lang.String" />
-        <set inverse="true" lazy="true" name="astronauta">
-            <key>
-                <column name="ID"/>
-            </key>
-            <one-to-many class="model.Astronauta"/>
-        </set>
-        <set inverse="true" lazy="true" name="prom">
-            <key>
-                <column name="ID"/>
-            </key>
-            <one-to-many class="model.Prom"/>
-        </set>
-
+    <joined-subclass extends="model.Misja" lazy="false" name="model.LotTransportowy" table="LOT_TRANSPORTOWY">
+        <key foreign-key="FK_LOT_TRANSPORTOWY_MISJA">
+            <column name="ID"/>
+        </key>
         <set inverse="true" lazy="true" name="ladunek">
             <key>
                 <column name="ID"/>
             </key>
             <one-to-many class="model.Ladunek"/>
         </set>
-    </class>
+    </joined-subclass>
 </hibernate-mapping>

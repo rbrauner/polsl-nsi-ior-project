@@ -4,13 +4,25 @@
 <hibernate-mapping>
     <class name="model.Astronauta" table="ASTRONAUTA">
         <id name="id" type="int">
-            <column name="ID" />
-            <generator class="native" />
+            <column name="ID"/>
+            <generator class="native"/>
         </id>
-        <property name="imie" type="java.lang.String" />
-        <property name="nazwisko" type="java.lang.String" />
-        <property name="stopien" type="java.lang.String" />
-        <property name="liczbaMisji" type="java.lang.Integer" />
-        <property name="liczbaSpacerowKosmicznych" type="java.lang.Integer" />
+        <property name="imie" type="java.lang.String"/>
+        <property name="nazwisko" type="java.lang.String"/>
+        <property name="stopien" type="java.lang.String"/>
+        <property name="liczbaMisji" type="java.lang.Integer"/>
+        <property name="liczbaSpacerowKosmicznych" type="java.lang.Integer"/>
+        <property name="rola">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">model.AstronautaRola</param>
+            </type>
+        </property>
+
+        <set cascade="save-update" lazy="true" name="misja" table="MISJA_ASTRONAUTA">
+            <key foreign-key="FK_MISJA_ASTRONAUTA">
+                <column name="astronauta_id"/>
+            </key>
+            <many-to-many class="model.Misja" column="misja_id" />
+        </set>
     </class>
 </hibernate-mapping>

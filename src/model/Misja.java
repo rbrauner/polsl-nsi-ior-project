@@ -5,19 +5,36 @@
  */
 package model;
 
-import java.util.List;
+import org.hibernate.annotations.Cascade;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Set;
 
 /**
- *
  * @author User
  */
-public class Misja {
-
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "MISJA")
+public class Misja implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "misja_id")
     private Integer id;
+
     private MisjaCel cel;
     private String uwagi;
-    private List<Astronauta> astronauta;
-    private List<Prom> prom;
+
+    @ManyToMany
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JoinTable(name = "MISJA_ASTRONAUTA", joinColumns = @JoinColumn(name = "misja_id"), inverseJoinColumns = @JoinColumn(name = "astronauta_id"), foreignKey = @javax.persistence.ForeignKey(name = "FK_MISJA_ASTRONAUTA"))
+    private Set<Astronauta> astronauta;
+
+    @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JoinColumn(name = "prom_id", foreignKey = @javax.persistence.ForeignKey(name = "FK_MISJA_PROM"))
+    private Prom prom;
 
     public Integer getId() {
         return id;
@@ -43,32 +60,30 @@ public class Misja {
         this.uwagi = uwagi;
     }
 
-    public List<Astronauta> getAstronauta() {
+    public Set<Astronauta> getAstronauta() {
         return astronauta;
     }
 
-    public void setAstronauta(List<Astronauta> astronauta) {
+    public void setAstronauta(Set<Astronauta> astronauta) {
         this.astronauta = astronauta;
     }
 
-    public List<Prom> getProm() {
+    public Prom getProm() {
         return prom;
     }
 
-    public void setProm(List<Prom> prom) {
+    public void setProm(Prom prom) {
         this.prom = prom;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Misja{id=").append(id);
-        sb.append(", cel=").append(cel);
-        sb.append(", uwagi=").append(uwagi);
-        sb.append(", astronauta=").append(astronauta);
-        sb.append(", prom=").append(prom);
-        sb.append('}');
-        return sb.toString();
+        return "Misja{" +
+                "id=" + id +
+                ", cel=" + cel +
+                ", uwagi='" + uwagi + '\'' +
+//                ", astronauta=" + astronauta +
+//                ", prom=" + prom +
+                '}';
     }
-
 }

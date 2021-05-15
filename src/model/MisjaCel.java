@@ -6,7 +6,6 @@
 package model;
 
 /**
- *
  * @author rafal
  */
 public enum MisjaCel {

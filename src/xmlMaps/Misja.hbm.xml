@@ -13,17 +13,13 @@
             </type>
         </property>
         <property name="uwagi" type="java.lang.String" />
-        <set inverse="true" lazy="true" name="astronauta">
-            <key>
-                <column name="ID"/>
+        <set cascade="save-update" lazy="true" name="astronauta" table="MISJA_ASTRONAUTA">
+            <key foreign-key="FK_MISJA_ASTRONAUTA">
+                <column name="misja_id"/>
             </key>
-            <one-to-many class="model.Astronauta"/>
+            <many-to-many class="model.Astronauta" column="astronauta_id" />
         </set>
-        <set inverse="true" lazy="true" name="prom">
-            <key>
-                <column name="ID"/>
-            </key>
-            <one-to-many class="model.Prom"/>
-        </set>
+        <many-to-one cascade="save-update" class="model.Prom" column="prom_id" foreign-key="FK_MISJA_PROM"
+                     name="prom" unique="false"/>
     </class>
 </hibernate-mapping>
