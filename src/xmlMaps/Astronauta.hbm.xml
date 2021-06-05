@@ -4,7 +4,7 @@
 <hibernate-mapping>
     <class name="model.Astronauta" table="ASTRONAUTA">
         <id name="id" type="int">
-            <column name="ID"/>
+            <column name="astronauta_id"/>
             <generator class="native"/>
         </id>
         <property name="imie" type="java.lang.String"/>

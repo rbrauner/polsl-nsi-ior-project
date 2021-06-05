@@ -4,7 +4,7 @@
 <hibernate-mapping>
     <class name="model.Prom" table="PROM">
         <id name="id" type="int">
-            <column name="ID"/>
+            <column name="prom_id"/>
             <generator class="native"/>
         </id>
         <property name="nazwa" type="java.lang.String"/>
@@ -13,7 +13,7 @@
         <property name="liczbaCzlonkowZalogi" type="java.lang.Integer"/>
         <set inverse="true" lazy="true" name="misja">
             <key>
-                <column name="ID"/>
+                <column name="misja_id"/>
             </key>
             <one-to-many class="model.Misja"/>
         </set>

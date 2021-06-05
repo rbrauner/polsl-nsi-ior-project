@@ -16,7 +16,7 @@
      * @author User
      */
     @Entity
-    @PrimaryKeyJoinColumn(name = "ID", foreignKey = @javax.persistence.ForeignKey(name = "FK_MISJA_BADAWCZA_MISJA"))
+    @PrimaryKeyJoinColumn(name = "misja_id", foreignKey = @javax.persistence.ForeignKey(name = "FK_MISJA_BADAWCZA_MISJA"))
     @Table(name = "MISJA_BADAWCZA")
     public class MisjaBadawcza extends Misja {
         @OneToMany(mappedBy = "misja")

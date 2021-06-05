@@ -4,11 +4,11 @@
 <hibernate-mapping>
     <joined-subclass extends="model.Misja" lazy="false" name="model.MisjaBadawcza" table="MISJA_BADAWCZA">
         <key foreign-key="FK_MISJA_BADAWCZA_MISJA">
-            <column name="ID"/>
+            <column name="misja_id"/>
         </key>
         <set inverse="true" lazy="true" name="zadanie">
             <key>
-                <column name="ID"/>
+                <column name="zadanie_id"/>
             </key>
             <one-to-many class="model.Zadanie"/>
         </set>

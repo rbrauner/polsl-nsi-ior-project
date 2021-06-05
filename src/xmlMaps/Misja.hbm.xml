@@ -4,7 +4,7 @@
 <hibernate-mapping>
     <class name="model.Misja" table="MISJA">
         <id name="id" type="int">
-            <column name="ID" />
+            <column name="misja_id" />
             <generator class="native" />
         </id>
         <property name="cel">
@@ -13,7 +13,7 @@
             </type>
         </property>
         <property name="uwagi" type="java.lang.String" />
-        <set cascade="save-update" lazy="true" name="astronauta" table="MISJA_ASTRONAUTA">
+        <set cascade="save-update" lazy="true" name="astronauta" table="MISJA_ASTRONAUTA" inverse="true">
             <key foreign-key="FK_MISJA_ASTRONAUTA">
                 <column name="misja_id"/>
             </key>

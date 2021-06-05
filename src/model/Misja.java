@@ -26,9 +26,7 @@ public class Misja implements Serializable {
     private MisjaCel cel;
     private String uwagi;
 
-    @ManyToMany
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    @JoinTable(name = "MISJA_ASTRONAUTA", joinColumns = @JoinColumn(name = "misja_id"), inverseJoinColumns = @JoinColumn(name = "astronauta_id"), foreignKey = @javax.persistence.ForeignKey(name = "FK_MISJA_ASTRONAUTA"))
+    @ManyToMany(mappedBy = "misja")
     private Set<Astronauta> astronauta;
 
     @ManyToOne
