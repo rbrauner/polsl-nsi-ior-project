@@ -13,7 +13,7 @@
         <property name="liczbaCzlonkowZalogi" type="java.lang.Integer"/>
         <set inverse="true" lazy="true" name="misja">
             <key>
-                <column name="misja_id"/>
+                <column name="prom_id"/>
             </key>
             <one-to-many class="model.Misja"/>
         </set>

@@ -36,7 +36,7 @@ public final class DataQueries {
 
     public void showAll(SessionFactory SESSION_FACTORY) {
         try (Session session = SESSION_FACTORY.openSession()) {
-            Query query = session.createQuery("select o from java.lang.Object o");
+            Query query = session.createQuery("select distinct o from java.lang.Object o");
             ((org.hibernate.query.Query<?>) query).setComment("All objects list");
             List<Object> all = query.getResultList();
             all.forEach(System.out::println);
@@ -45,7 +45,7 @@ public final class DataQueries {
 
     public void query1(SessionFactory SESSION_FACTORY) {
         try (Session session = SESSION_FACTORY.openSession()) {
-            Query query = session.createQuery("select a from Astronauta a where a.nazwisko like '%Kowal%'");
+            Query query = session.createQuery("select distinct a from Astronauta a where a.nazwisko like '%Kowal%'");
             List<Astronauta> resultList = query.getResultList();
             resultList.stream().forEach((item) -> {
                 System.out.println(item);
@@ -55,7 +55,7 @@ public final class DataQueries {
 
     public void query2(SessionFactory SESSION_FACTORY) {
         try (Session session = SESSION_FACTORY.openSession()) {
-            Query query = session.createQuery("select m.prom from Astronauta a join a.misja m where m.uwagi like '%Brak%'", Prom.class);
+            Query query = session.createQuery("select distinct m.prom from Astronauta a join a.misja m where m.uwagi like '%Brak%'", Prom.class);
             List<Prom> resultList = query.getResultList();
             resultList.stream().forEach((item) -> {
                 System.out.println(item);

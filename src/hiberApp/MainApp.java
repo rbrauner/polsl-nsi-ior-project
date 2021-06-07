@@ -19,10 +19,10 @@ public final class MainApp {
 //        final DataLoad dataLoad = new DataLoad();
 //        dataLoad.createData(SESSION_FACTORY);
 
-//        final DataQueries dataQueries = new DataQueries();
-//        dataQueries.query1(SESSION_FACTORY);
-//        dataQueries.query2(SESSION_FACTORY);
-//        dataQueries.query3(SESSION_FACTORY);
+        final DataQueries dataQueries = new DataQueries();
+        dataQueries.query1(SESSION_FACTORY);
+        dataQueries.query2(SESSION_FACTORY);
+        dataQueries.query3(SESSION_FACTORY);
 
     }
 }

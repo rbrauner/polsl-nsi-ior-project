@@ -10,6 +10,6 @@
         <property name="nazwa" type="java.lang.String"/>
         <property name="opis" type="java.lang.String"/>
         <many-to-one cascade="save-update" class="model.MisjaBadawcza" column="misja_id" foreign-key="FK_ZADANIE_MISJA"
-                     name="misja" unique="false"/>
+                     name="misjaBadawcza" unique="false"/>
     </class>
 </hibernate-mapping>

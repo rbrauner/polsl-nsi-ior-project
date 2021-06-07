@@ -13,7 +13,8 @@
             </type>
         </property>
         <property name="uwagi" type="java.lang.String"/>
-        <many-to-one cascade="save-update" class="model.LotTransportowy" column="misja_id" foreign-key="FK_LADUNEK_MISJA"
-                     name="misja" unique="false"/>
+        <many-to-one cascade="save-update" class="model.LotTransportowy" column="misja_id"
+                     foreign-key="FK_LADUNEK_MISJA"
+                     name="lotTransportowy" unique="false"/>
     </class>
 </hibernate-mapping>

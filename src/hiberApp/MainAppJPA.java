@@ -28,8 +28,8 @@ public final class MainAppJPA {
     private static final SessionFactory SESSION_FACTORY = HiberUtil.getSessionFactory(HiberUtil.Mapping.ANN);
 
     public static void main(String[] args) {
-        final DataLoad dataLoad = new DataLoad();
-        dataLoad.createData(SESSION_FACTORY);
+//        final DataLoad dataLoad = new DataLoad();
+//        dataLoad.createData(SESSION_FACTORY);
 
         query1();
         query2();
@@ -42,6 +42,7 @@ public final class MainAppJPA {
         CriteriaQuery<Astronauta> criteria = builder.createQuery(Astronauta.class);
         Root<Astronauta> astronauta = criteria.from(Astronauta.class);
         criteria.select(astronauta).where(builder.like(astronauta.get("nazwisko"), "%Kowal%"));
+        criteria.distinct(true);
 
         List<Astronauta> resultList = em.createQuery(criteria).getResultList();
         resultList.forEach(System.out::println);
@@ -55,6 +56,7 @@ public final class MainAppJPA {
         Join<Astronauta, Misja> misja = astronauta.join("misja");
         Join<Misja, Prom> prom = misja.join("prom");
         criteria.select(prom).where(builder.like(misja.get("uwagi"), "%Brak%"));
+        criteria.distinct(true);
 
         List<Prom> resultList = em.createQuery(criteria).getResultList();
         resultList.forEach(System.out::println);
@@ -66,6 +68,7 @@ public final class MainAppJPA {
         CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
         Root<Astronauta> astronauta = criteria.from(Astronauta.class);
         criteria.select(builder.count(astronauta));
+        criteria.distinct(true);
 
         List<Long> resultList = em.createQuery(criteria).getResultList();
         resultList.forEach(System.out::println);

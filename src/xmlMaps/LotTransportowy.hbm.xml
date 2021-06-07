@@ -8,7 +8,7 @@
         </key>
         <set inverse="true" lazy="true" name="ladunek">
             <key>
-                <column name="ladunek_id"/>
+                <column name="misja_id"/>
             </key>
             <one-to-many class="model.Ladunek"/>
         </set>

@@ -5,15 +5,20 @@
  */
 package model;
 
+import lombok.*;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
  * @author User
  */
+@Data
+@RequiredArgsConstructor
+@ToString
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "MISJA")
@@ -26,62 +31,14 @@ public class Misja implements Serializable {
     private MisjaCel cel;
     private String uwagi;
 
-    @ManyToMany(mappedBy = "misja")
-    private Set<Astronauta> astronauta;
+    @ToString.Exclude
+    @ManyToMany
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JoinTable(name = "MISJA_ASTRONAUTA", joinColumns = @JoinColumn(name = "misja_id"), inverseJoinColumns = @JoinColumn(name = "astronauta_id"), foreignKey = @javax.persistence.ForeignKey(name = "FK_MISJA_ASTRONAUTA"), inverseForeignKey = @javax.persistence.ForeignKey(name = "FK_ASTRONAUTA_MISJA"))
+    private Set<Astronauta> astronauta = new HashSet<>();
 
     @ManyToOne
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinColumn(name = "prom_id", foreignKey = @javax.persistence.ForeignKey(name = "FK_MISJA_PROM"))
     private Prom prom;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public MisjaCel getCel() {
-        return cel;
-    }
-
-    public void setCel(MisjaCel cel) {
-        this.cel = cel;
-    }
-
-    public String getUwagi() {
-        return uwagi;
-    }
-
-    public void setUwagi(String uwagi) {
-        this.uwagi = uwagi;
-    }
-
-    public Set<Astronauta> getAstronauta() {
-        return astronauta;
-    }
-
-    public void setAstronauta(Set<Astronauta> astronauta) {
-        this.astronauta = astronauta;
-    }
-
-    public Prom getProm() {
-        return prom;
-    }
-
-    public void setProm(Prom prom) {
-        this.prom = prom;
-    }
-
-    @Override
-    public String toString() {
-        return "Misja{" +
-                "id=" + id +
-                ", cel=" + cel +
-                ", uwagi='" + uwagi + '\'' +
-//                ", astronauta=" + astronauta +
-//                ", prom=" + prom +
-                '}';
-    }
 }
