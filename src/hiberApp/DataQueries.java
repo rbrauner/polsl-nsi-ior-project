@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import javax.persistence.Query;
+import javax.persistence.Tuple;
 import java.util.List;
 
 /*
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public final class DataQueries {
 
-     /**
+    /**
      * Queries test data
      *
      * @param SESSION_FACTORY for connecting data source
@@ -45,30 +46,30 @@ public final class DataQueries {
 
     public void query1(SessionFactory SESSION_FACTORY) {
         try (Session session = SESSION_FACTORY.openSession()) {
-            Query query = session.createQuery("select distinct a from Astronauta a where a.nazwisko like '%Kowal%'");
-            List<Astronauta> resultList = query.getResultList();
+            Query query = session.createQuery("select a.imie, a.nazwisko from Astronauta a where a.nazwisko like '%Kowal%'", Tuple.class);
+            List<Tuple> resultList = query.getResultList();
             resultList.stream().forEach((item) -> {
-                System.out.println(item);
+                System.out.println(item.get(0) + " " + item.get(1));
             });
         }
     }
 
     public void query2(SessionFactory SESSION_FACTORY) {
         try (Session session = SESSION_FACTORY.openSession()) {
-            Query query = session.createQuery("select distinct m.prom from Astronauta a join a.misja m where m.uwagi like '%Brak%'", Prom.class);
-            List<Prom> resultList = query.getResultList();
+            Query query = session.createQuery("select m.prom, m.astronauta.size from Misja m where m.uwagi like '%Brak%'", Tuple.class);
+            List<Tuple> resultList = query.getResultList();
             resultList.stream().forEach((item) -> {
-                System.out.println(item);
+                System.out.println(item.get(0) + " " + item.get(1));
             });
         }
     }
 
     public void query3(SessionFactory SESSION_FACTORY) {
         try (Session session = SESSION_FACTORY.openSession()) {
-            Query query = session.createQuery("select count(a) from Astronauta a");
-            List<Long> resultList = query.getResultList();
+            Query query = session.createQuery("select count(a), avg(a.liczbaMisji) from Astronauta a", Tuple.class);
+            List<Tuple> resultList = query.getResultList();
             resultList.stream().forEach((item) -> {
-                System.out.println(item);
+                System.out.println(item.get(0) + " " + item.get(1));
             });
         }
     }

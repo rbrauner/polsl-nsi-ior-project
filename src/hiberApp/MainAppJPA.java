@@ -10,14 +10,17 @@ import model.Misja;
 import model.Prom;
 import org.hibernate.Metamodel;
 import org.hibernate.SessionFactory;
+import org.hibernate.jpa.spi.TupleBuilderTransformer;
 import org.hibernate.query.criteria.internal.predicate.LikePredicate;
 import util.HiberUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Tuple;
 import javax.persistence.criteria.*;
 import javax.persistence.metamodel.EntityType;
+import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -39,38 +42,41 @@ public final class MainAppJPA {
     public static void query1() {
         EntityManager em = SESSION_FACTORY.createEntityManager();
         CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Astronauta> criteria = builder.createQuery(Astronauta.class);
+        CriteriaQuery<Tuple> criteria = builder.createTupleQuery();
         Root<Astronauta> astronauta = criteria.from(Astronauta.class);
-        criteria.select(astronauta).where(builder.like(astronauta.get("nazwisko"), "%Kowal%"));
-        criteria.distinct(true);
+        criteria.select(builder.tuple(astronauta.get("imie"), astronauta.get("nazwisko"))).where(builder.like(astronauta.get("nazwisko"), "%Kowal%"));
 
-        List<Astronauta> resultList = em.createQuery(criteria).getResultList();
-        resultList.forEach(System.out::println);
+        List<Tuple> resultList = em.createQuery(criteria).getResultList();
+        resultList.stream().forEach((item) -> {
+            System.out.println(item.get(0) + " " + item.get(1));
+        });
     }
 
     public static void query2() {
         EntityManager em = SESSION_FACTORY.createEntityManager();
         CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Prom> criteria = builder.createQuery(Prom.class);
-        Root<Astronauta> astronauta = criteria.from(Astronauta.class);
-        Join<Astronauta, Misja> misja = astronauta.join("misja");
-        Join<Misja, Prom> prom = misja.join("prom");
-        criteria.select(prom).where(builder.like(misja.get("uwagi"), "%Brak%"));
-        criteria.distinct(true);
+        CriteriaQuery<Tuple> criteria = builder.createTupleQuery();
+        Root<Misja> misja = criteria.from(Misja.class);
+//        Join<Misja, Astronauta> astronauta = misja.join("astronauta");
+        criteria.select(builder.tuple(misja.get("prom").get("nazwa"), builder.size(misja.get("astronauta")))).where(builder.like(misja.get("uwagi"), "%Brak%"));
 
-        List<Prom> resultList = em.createQuery(criteria).getResultList();
-        resultList.forEach(System.out::println);
+        List<Tuple> resultList = em.createQuery(criteria).getResultList();
+        resultList.stream().forEach((item) -> {
+            System.out.println(item.get(0) + " " + item.get(1));
+        });
     }
 
     public static void query3() {
         EntityManager em = SESSION_FACTORY.createEntityManager();
         CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
+        CriteriaQuery<Tuple> criteria = builder.createTupleQuery();
         Root<Astronauta> astronauta = criteria.from(Astronauta.class);
-        criteria.select(builder.count(astronauta));
+        criteria.select(builder.tuple(builder.count(astronauta), builder.avg(astronauta.get("liczbaMisji"))));
         criteria.distinct(true);
 
-        List<Long> resultList = em.createQuery(criteria).getResultList();
-        resultList.forEach(System.out::println);
+        List<Tuple> resultList = em.createQuery(criteria).getResultList();
+        resultList.stream().forEach((item) -> {
+            System.out.println(item.get(0) + " " + item.get(1));
+        });
     }
 }
